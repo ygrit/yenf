@@ -21,6 +21,8 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', include('main.urls', namespace='main')),
+    #namespace here is name of app, to avoid conflicts when multiple apps have same url names
 ]
 
 if settings.DEBUG:

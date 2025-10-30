@@ -21,7 +21,7 @@ class IndexView(TemplateView):
             return TemplateResponse(request, 'main/home_content.html', context)
         return TemplateResponse(request, self.template_name, context)
 
-class CatalogueView(TemplateView):
+class CatalogView(TemplateView):
     template = 'main/base.html'
         
     #filtre des produits
