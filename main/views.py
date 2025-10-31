@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404
 from django.views.generic import ListView, DetailView
 from django.http import HttpResponse
 from django.template.response import TemplateResponse
+from django.views.generic.base import TemplateView
 from .models import Category, Product, Size
 from django.db.models import Q  
 
@@ -17,7 +18,7 @@ class IndexView(TemplateView):
     
     def get(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
-        if request.headers.get('XH-Request'):
+        if request.headers.get('HX-Request'):
             return TemplateResponse(request, 'main/home_content.html', context)
         return TemplateResponse(request, self.template_name, context)
 
@@ -74,13 +75,13 @@ class CatalogView(TemplateView):
 #insert the content of other page  , so we should get it first here
     def get(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
-        if request.headers.get('XH-Request'):
-            return TemplateResponse(request, 'main/catalogue_content.html', context)
+        if request.headers.get('HX-Request'):
+            return TemplateResponse(request, 'main/catalog.html', context)
         return TemplateResponse(request, self.template, context)
 
     def get(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
-        if request.headers.get('XH-Request'):
+        if request.headers.get('HX-Request'):
             if context.get('show_search'):
                 return TemplateResponse(request, 'main/search_input.html', context)
             elif context.get('reset_search'):
@@ -106,6 +107,6 @@ class ProductDetailView(DetailView):
     def get(self, request, *args, **kwargs):
         self.object=self.get_object()
         context = self.get_context_data(**kwargs)
-        if request.headers.get('XH-Request'):
+        if request.headers.get('HX-Request'):
             return TemplateResponse(request, 'main/product_detail.html', context)
         raise TemplateResponse(request, self.template_name, context)
